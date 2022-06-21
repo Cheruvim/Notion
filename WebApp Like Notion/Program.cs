@@ -4,7 +4,7 @@ using WebApp_Like_Notion.Models;
 var builder = WebApplication.CreateBuilder(args);
 var dbString = "Server=localhost;Database=Notion;User Id=sa;Password=1; TrustServerCertificate=True";
 
-builder.Services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(dbString));
+builder.Services.AddDbContext<NotesContext>(options => options.UseSqlServer(dbString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();  
 
 // Add services to the container.
@@ -17,7 +17,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<EmployeeContext>();
+        var context = services.GetRequiredService<NotesContext>();
         DbInitializer.Initialize(context);
     }
     catch (Exception ex)

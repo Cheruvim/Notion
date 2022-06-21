@@ -5,40 +5,69 @@ namespace WebApp_Like_Notion.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly EmployeeContext _dbContext;  
+    private readonly NotesContext _dbContext;  
 
-    public HomeController(EmployeeContext dbContext)  
+    public HomeController(NotesContext dbContext)  
     {  
         _dbContext = dbContext;  
     }  
     
     public IActionResult Index()
     {
-        var _emplst = _dbContext.Employees.  
-            Join(_dbContext.Skills, e => e.SkillID, s => s.SkillID,  
-                (e, s) => new EmployeeViewModel  
-                { EmployeeID = e.EmployeeID, EmployeeName = e.EmployeeName,  
-                    PhoneNumber = e.PhoneNumber, Skill = s.Title,  
-                    YearsExperience = e.YearsExperience }).ToList();  
-        IList<EmployeeViewModel> emplst  = _emplst;  
-        
-        ViewBag.Title ="Доброе утро";
-        return View(emplst);
+        ViewBag.Title ="Первая страница";
+        return View(GetNotesList());
     }
 
     [HttpGet]
-    public ViewResult RsvpForm()
+    public ViewResult AddNote()
     {
         return View();
     }
 
     [HttpPost]
-    public ViewResult RsvpForm(GuestResponse guest)
+    public ViewResult AddNote(Note note)
     {
-        if (ModelState.IsValid)
-            // Нужно отправить данные нового гостя по электронной почте 
-            // организатору вечеринки.
-            return View("Thanks", guest);
-        return View();
+        _dbContext.Add(note);
+        _dbContext.SaveChanges();
+        
+        return View("Index", GetNotesList());
+    }
+    
+    [HttpGet]
+    public ViewResult EditNote(int id)
+    {
+        var note = _dbContext.Notes.Where(n => n.Id == id).FirstOrDefault();
+        if(note != null)
+            return View();
+        else
+            return View("Index", GetNotesList());
+    }
+
+    [HttpPost]
+    public ViewResult EditNote(Note note)
+    {
+        _dbContext.Update(note);
+        _dbContext.SaveChanges();
+        
+        return View("Index", GetNotesList());
+    }
+    
+    [HttpGet]
+    public ViewResult DeleteNote(int id)
+    {
+        var elemForDelete = _dbContext.Notes.Where(n => n.Id == id).FirstOrDefault();
+        if (elemForDelete != null)
+        {
+            elemForDelete.IsDeleted = true;
+            elemForDelete.DeleteTime = DateTime.Now;
+        }
+        _dbContext.SaveChanges();
+        
+        return View("Index", GetNotesList());
+    }
+
+    private List<Note> GetNotesList()
+    {
+        return _dbContext.Notes.Where(n => !n.IsDeleted).ToList();
     }
 }

@@ -22,6 +22,9 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "ConnectionStrings": {
+        "MbkDbConstr": "Data Source=(localdb)\\MBK;Database=MbkTest;"
       }
     }
   }

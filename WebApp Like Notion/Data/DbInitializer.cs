@@ -2,40 +2,26 @@
 
 public class DbInitializer
 {
-    public static void Initialize(EmployeeContext context)
+    public static void Initialize(NotesContext context)
+    {
+        context.Database.EnsureCreated();
+
+        // Look for any notes.
+        if (context.Notes.Any())
         {
-            context.Database.EnsureCreated();
-
-            // Look for any students.
-            if (context.Employees.Any())
-            {
-                return;   // DB has been seeded
-            }
-
-            var employees = new tblEmployee[]
-            {
-                new() {EmployeeName = "hi1", PhoneNumber = "2131311", YearsExperience = 5, SkillID = 1},
-                new() {EmployeeName = "hi2", PhoneNumber = "2131312", YearsExperience = 2, SkillID = 2},
-                new() {EmployeeName = "hi3", PhoneNumber = "2131313", YearsExperience = 4, SkillID = 1},
-                new() {EmployeeName = "hi4", PhoneNumber = "2131314", YearsExperience = 7, SkillID = 2},
-
-            };
-            foreach (var employee in employees)
-            {
-                context.Employees.Add(employee);
-            }
-            context.SaveChanges();
-
-            var skills = new tblSkill[]
-            {
-            new() {Title = "Hier"},
-            new() {Title = "Hier#2"}
-
-            };
-            foreach (var skill in skills)
-            {
-                context.Skills.Add(skill);
-            }
-            context.SaveChanges();
+            return;   // DB has been seeded
         }
+
+        var notes = new Note[]
+        {
+            new() {Title = "My first note", Header = "",  Body = "It is my first note!"},
+            new() {Title = "My second note", Header = "",  Body = "It is my second note!"},
+            new() {Title = "My third note", Header = "",  Body = "It is my third note!"},
+        };
+        foreach (var note in notes)
+        {
+            context.Notes.Add(note);
+        }
+        context.SaveChanges();
+    }
 }
