@@ -20,7 +20,7 @@ public class DeletedElemsController : Controller
     [HttpGet]
     public ViewResult RestoreNote(int id)
     {
-        var note = _dbContext.Notes.Where(n => n.Id == id).FirstOrDefault();
+        var note = _dbContext.Notes.FirstOrDefault(n => n.Id == id);
         note.IsDeleted = false;
         _dbContext.SaveChanges();
         return View("Index", GetNotesList());

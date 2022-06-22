@@ -36,7 +36,7 @@ public class HomeController : Controller
     [HttpGet]
     public ViewResult EditNote(int id)
     {
-        var note = _dbContext.Notes.Where(n => n.Id == id).FirstOrDefault();
+        var note = _dbContext.Notes.FirstOrDefault(n => n.Id == id);
         if(note != null)
             return View();
         else
@@ -55,7 +55,7 @@ public class HomeController : Controller
     [HttpGet]
     public ViewResult DeleteNote(int id)
     {
-        var elemForDelete = _dbContext.Notes.Where(n => n.Id == id).FirstOrDefault();
+        var elemForDelete = _dbContext.Notes.FirstOrDefault(n => n.Id == id);
         if (elemForDelete != null)
         {
             elemForDelete.IsDeleted = true;
