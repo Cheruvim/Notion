@@ -38,7 +38,7 @@ public class HomeController : Controller
     {
         var note = _dbContext.Notes.FirstOrDefault(n => n.Id == id);
         if(note != null)
-            return View();
+            return View(note);
         else
             return View("Index", GetNotesList());
     }
@@ -66,8 +66,11 @@ public class HomeController : Controller
         return View("Index", GetNotesList());
     }
 
-    private List<Note> GetNotesList()
+    private ViewModel GetNotesList()
     {
-        return _dbContext.Notes.Where(n => !n.IsDeleted).ToList();
+        ViewModel mymodel = new ViewModel();
+        mymodel.Notes = _dbContext.Notes.Where(n => !n.IsDeleted).ToList();
+        mymodel.Note = new Note();
+        return mymodel;
     }
 }
