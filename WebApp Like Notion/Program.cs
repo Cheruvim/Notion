@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApp_Like_Notion.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var dbString = "Server=localhost;Database=Notion;User Id=sa;Password=1; TrustServerCertificate=True";
+var dbString = builder.Configuration.GetValue<string>("ConnectionStrings");
 
 builder.Services.AddDbContext<NotesContext>(options => options.UseSqlServer(dbString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();  
