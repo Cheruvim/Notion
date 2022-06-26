@@ -65,12 +65,19 @@ public class HomeController : Controller
         
         return View("Index", GetNotesList());
     }
+    
+    [HttpGet]
+    public ViewResult ViewNote(int id)
+    {
+        var note = _dbContext.Notes.FirstOrDefault(n => n.Id == id);
+        return View(note);
+    }
 
     private ViewModel GetNotesList()
     {
-        ViewModel mymodel = new ViewModel();
-        mymodel.Notes = _dbContext.Notes.Where(n => !n.IsDeleted).ToList();
-        mymodel.Note = new Note();
-        return mymodel;
+        var myModel = new ViewModel();
+        myModel.Notes = _dbContext.Notes.Where(n => !n.IsDeleted).ToList();
+        myModel.Note = new Note();
+        return myModel;
     }
 }

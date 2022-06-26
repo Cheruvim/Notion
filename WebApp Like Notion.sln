@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp Like Notion", "WebApp Like Notion\WebApp Like Notion.csproj", "{CBE9EB86-063A-4489-A3E5-1D39E9EBC63C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNotion", "MyNotion\MyNotion.csproj", "{CBE9EB86-063A-4489-A3E5-1D39E9EBC63C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

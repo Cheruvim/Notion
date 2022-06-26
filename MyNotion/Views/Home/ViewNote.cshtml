@@ -1,0 +1,10 @@
+﻿@model WebApp_Like_Notion.Models.Note?
+
+@{
+    if(ViewBag.Title == null)
+        ViewBag.Title = "Home Page";
+}
+
+    <h1 class="display-5 fw-bold">@Model.Title</h1>
+    <p class="lead">@Model.Header</p>
+    <p class="lead">@Model.Body</p>

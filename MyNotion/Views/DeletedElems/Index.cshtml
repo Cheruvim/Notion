@@ -5,11 +5,13 @@
 }
 
 <div class="text-center">
-    
-    
-    
     <table class="table">
         <tbody>
+        @if (!Model.Any())
+        {
+            <h1 class="display-5 fw-bold">Нет удаленных записей.</h1>
+        }
+        
         @foreach (var item in Model)
         {
             <tr>
@@ -26,16 +28,10 @@
                     @Html.DisplayFor(modelItem => item.Body)
                 </td>
                 <td>
-                    @Html.ActionLink("Restore", "RestoreNote", new { id = item.Id })
+                    @Html.ActionLink("Restore", "RestoreNote", new {id = item.Id})
                 </td>
             </tr>
         }
         </tbody>
     </table>
-
-    <div class="btn btn-success">
-        @Html.ActionLink("Добавить запись", "AddNote", "Home")
-    </div>
-
-
 </div>
